@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detection Result</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">🌱 SeedGuard <span>AI</span></div>
+  <nav><a href="/">Detect</a><a href="/history">History</a></nav>
+</header>
+<main class="container">
+  <div class="page-title"><p class="eyebrow">ANALYSIS COMPLETE</p><h1>Detection Result</h1></div>
+
+  <section class="result-layout">
+    <div class="card image-card">
+      <img src="{{ url_for('uploaded_file', filename=filename) }}" alt="Seed">
+      <p class="filename">{{ original_name }}</p>
+    </div>
+
+    <div class="card result-card">
+      <div class="result-badge {% if 'Fake' in result %}fake{% else %}genuine{% endif %}">
+        {% if 'Fake' in result %}⚠️{% else %}✓{% endif %}
+      </div>
+      <p class="muted">Prototype classification</p>
+      <h2>{{ result }}</h2>
+      <div class="confidence"><span>Confidence</span><strong>{{ confidence }}%</strong></div>
+      <div class="meter"><div style="width: {{ confidence }}%"></div></div>
+
+      <div class="stats">
+        <div><span>Prototype quality score</span><b>{{ quality_score }}/100</b></div>
+        <div><span>Brightness</span><b>{{ brightness }}</b></div>
+        <div><span>Texture score</span><b>{{ texture }}</b></div>
+      </div>
+
+      <a class="primary link-button" href="/">Analyze another image</a>
+    </div>
+  </section>
+
+  <div class="notice">
+    <b>For your final project:</b> this screen can be connected to a trained CNN model
+    so that the result comes from real labeled seed data instead of the current demo scorer.
+  </div>
+</main>
+</body>
+</html>

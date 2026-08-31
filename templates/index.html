@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SeedGuard AI</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">🌱 SeedGuard <span>AI</span></div>
+  <nav><a href="/">Detect</a><a href="/history">History</a></nav>
+</header>
+
+<main class="container">
+  <section class="hero">
+    <div>
+      <p class="eyebrow">AI-BASED AGRICULTURE PROJECT</p>
+      <h1>Fake Seed<br><span>Detection System</span></h1>
+      <p class="subtitle">Upload a clear seed image and run the prototype analysis.</p>
+    </div>
+    <div class="hero-icon">🌾</div>
+  </section>
+
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <div class="alert">{{ messages[0] }}</div>
+    {% endif %}
+  {% endwith %}
+
+  <section class="card upload-card">
+    <h2>Analyze Seed Image</h2>
+    <p class="muted">Use JPG, JPEG, PNG or WEBP. A clear image gives better prototype results.</p>
+
+    <form action="/predict" method="POST" enctype="multipart/form-data" id="uploadForm">
+      <label class="dropzone" for="seed_image">
+        <div id="previewWrap" class="preview-wrap">
+          <div class="upload-symbol">📷</div>
+          <strong>Click to choose a seed image</strong>
+          <small>or drag and drop it here</small>
+        </div>
+        <img id="preview" class="preview hidden" alt="Selected seed image">
+      </label>
+      <input type="file" id="seed_image" name="seed_image" accept=".jpg,.jpeg,.png,.webp" hidden required>
+      <button class="primary" type="submit">🔍 Analyze Seed</button>
+    </form>
+  </section>
+
+  <section class="info-grid">
+    <div class="mini-card"><b>01</b><h3>Upload</h3><p>Select a clear seed photograph.</p></div>
+    <div class="mini-card"><b>02</b><h3>Analyze</h3><p>Prototype image features are calculated.</p></div>
+    <div class="mini-card"><b>03</b><h3>Result</h3><p>View classification and confidence.</p></div>
+  </section>
+
+  <div class="notice">
+    <b>Prototype notice:</b> Current results are for demonstrating the application workflow.
+    They should not be used to make agricultural or commercial decisions.
+  </div>
+</main>
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detection History</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">🌱 SeedGuard <span>AI</span></div>
+  <nav><a href="/">Detect</a><a href="/history">History</a></nav>
+</header>
+<main class="container">
+  <div class="page-title"><p class="eyebrow">DATABASE</p><h1>Detection History</h1></div>
+  <section class="card table-card">
+    {% if rows %}
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Image</th><th>Result</th><th>Confidence</th><th>Quality</th><th>Date</th></tr></thead>
+        <tbody>
+        {% for r in rows %}
+          <tr>
+            <td><a href="{{ url_for('uploaded_file', filename=r['filename']) }}" target="_blank">View image</a></td>
+            <td class="{% if 'Fake' in r['result'] %}red{% else %}green{% endif %}">{{ r['result'] }}</td>
+            <td>{{ r['confidence'] }}%</td>
+            <td>{{ r['quality_score'] }}/100</td>
+            <td>{{ r['created_at'] }}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+      <div class="empty">No scans yet. <a href="/">Analyze your first seed image.</a></div>
+    {% endif %}
+  </section>
+</main>
+</body>
+</html>
